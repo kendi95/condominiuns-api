@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Roles {
+  id          String  @unique @default(uuid())
+  name        String
+  description String?
+
+  users Users[]
+
+  @@map("roles")
+}
+
+model Users {
+  id       String  @unique @default(uuid())
+  name     String
+  email    String  @unique
+  password String
+  status   Boolean @default(true)
+
+  role    Roles  @relation(fields: [id_role], references: [id])
+  id_role String
+
+  @@map("users")
+}
+
+model Condominiuns {
+  id          String  @unique @default(uuid())
+  name        String  @unique
+  description String?
+  document    String  @unique @db.Char(18)
+  status      Boolean @default(true)
+
+  address Addresses?
+
+  @@map("condominiuns")
+}
+
+model Addresses {
+  id            String  @unique @default(uuid())
+  address       String
+  street_number Int
+  zip_code      String  @db.Char(9)
+  complement    String?
+  neighborhood  String
+  city          String
+  province      String
+
+  condominium    Condominiuns @relation(fields: [id_condominium], references: [id])
+  id_condominium String       @unique
+
+  @@map("addresses")
+}
