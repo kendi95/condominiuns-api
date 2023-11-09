@@ -1,4 +1,5 @@
 import { Addresses } from './Addresses'
+import { Contacts } from './Contacts'
 
 export class Condominiuns {
   id: string
@@ -8,4 +9,5 @@ export class Condominiuns {
   status: boolean
 
   address?: Addresses
+  contact?: Contacts
 }

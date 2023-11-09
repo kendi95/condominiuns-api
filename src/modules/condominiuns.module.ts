@@ -8,6 +8,7 @@ import {
 import { DatabaseModule } from './database.module'
 import { CondominiunsValidations } from '@validations/condominiuns'
 import { CondominiunAddressValidations } from '@validations/condominiuns/address.validation'
+import { CondominiunContactValidations } from '@validations/condominiuns/contact.validation'
 
 import { GetCondominiunsService } from '@services/condominiuns/GetCondominiunsService'
 import { ListCondominiunsService } from '@services/condominiuns/ListCondominiunsService'
@@ -16,6 +17,7 @@ import { UpdateCondominiunsService } from '@services/condominiuns/UpdateCondomin
 import { UpdateCondominiunsStatusService } from '@services/condominiuns/UpdateCondominiunsStatusService'
 import { UpdateCondominiunsAddressService } from '@services/condominiuns/UpdateCondominiunsAddressService'
 import { DeleteCondominiunsService } from '@services/condominiuns/DeleteCondominiunsService'
+import { UpdateCondominiunsContactService } from '@services/condominiuns/UpdateCondominiunsContactService'
 import { ListCondominiunsController } from '@controllers/condominiuns/ListCondominiunsController'
 import { CreateCondominiunsController } from '@controllers/condominiuns/CreateCondominiunsController'
 import { GetCondominiunsController } from '@controllers/condominiuns/GetCondominiunsController'
@@ -23,6 +25,7 @@ import { UpdateCondominiunsController } from '@controllers/condominiuns/UpdateCo
 import { UpdateCondominiunsStatusController } from '@controllers/condominiuns/UpdateCondominiunsStatusController'
 import { UpdateCondominiunsAddressController } from '@controllers/condominiuns/UpdateCondominiunsAddressController'
 import { DeleteCondominiunsController } from '@controllers/condominiuns/DeleteCondominiunsController'
+import { UpdateCondominiunsContactController } from '@controllers/condominiuns/UpdateCondominiunsContactController'
 
 @Module({
   imports: [DatabaseModule],
@@ -34,6 +37,7 @@ import { DeleteCondominiunsController } from '@controllers/condominiuns/DeleteCo
     UpdateCondominiunsStatusController,
     UpdateCondominiunsAddressController,
     DeleteCondominiunsController,
+    UpdateCondominiunsContactController,
   ],
   providers: [
     ListCondominiunsService,
@@ -43,6 +47,7 @@ import { DeleteCondominiunsController } from '@controllers/condominiuns/DeleteCo
     UpdateCondominiunsStatusService,
     UpdateCondominiunsAddressService,
     DeleteCondominiunsService,
+    UpdateCondominiunsContactService,
   ],
 })
 export class CondominiunsModule implements NestModule {
@@ -57,6 +62,10 @@ export class CondominiunsModule implements NestModule {
     })
     consumer.apply(CondominiunAddressValidations).forRoutes({
       path: 'condominiuns/:id/address',
+      method: RequestMethod.PUT,
+    })
+    consumer.apply(CondominiunContactValidations).forRoutes({
+      path: 'condominiuns/:id/contact',
       method: RequestMethod.PUT,
     })
   }

@@ -15,3 +15,10 @@ Create Middleware to set validations
 ### CONDOMINIUNS 27-09-2023
 Created tables condominiuns and addresses
 Created CRUD of condominiuns scoped services and controllers
+
+### CONDOMINIUNS 02-10-2023
+Created validation of property 'cnpj'
+
+### CONDOMINIUNS 08-11-2023
+Updated condominium properties 'contacts'
+Created validation to contacts of condominiuns

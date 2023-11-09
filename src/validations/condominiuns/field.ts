@@ -7,6 +7,16 @@ export const createCondominiumSchema = z
       .string()
       .nonempty("O campo 'descrição' não deve estar vazio."),
     document: z.string().nonempty("O campo 'documento' não deve estar vazio."),
+    contact: z.object({
+      email: z
+        .string()
+        .email()
+        .nonempty("O campo 'email' não deve estar vazio."),
+      phone: z.string().nonempty("O campo 'telefone' não deve estar vazio."),
+      cell_phone: z
+        .string()
+        .nonempty("O campo 'celular' não deve estar vazio."),
+    }),
   })
   .required()
 
@@ -18,6 +28,12 @@ export const updateCondominiumSchema = z
       .nonempty("O campo 'descrição' não deve estar vazio."),
   })
   .required()
+
+export const updateCondomiumContactSchema = z.object({
+  email: z.string().email().nullable(),
+  phone: z.string().nullable(),
+  cell_phone: z.string().nullable(),
+})
 
 export const updateCondominiumAddressSchema = z
   .object({

@@ -2,11 +2,22 @@ export type CreateCondominiumDTO = {
   name: string
   description: string
   document: string
+  contact: {
+    email: string
+    phone: string
+    cell_phone: string
+  }
 }
 
 export type UpdateCondominiumDTO = {
   name: string
   description: string
+}
+
+export type UpdateCondominiumContactDTO = {
+  email: string
+  phone: string
+  cell_phone: string
 }
 
 export type UpdateCondominiumAddressDTO = {

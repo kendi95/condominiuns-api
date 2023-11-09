@@ -5,6 +5,7 @@ import { Condominiuns } from '@domains/Condominiuns'
 import {
   CreateCondominiumDTO,
   UpdateCondominiumAddressDTO,
+  UpdateCondominiumContactDTO,
   UpdateCondominiumDTO,
 } from '@dtos/condominiuns'
 import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsRepository'
@@ -34,7 +35,16 @@ export class CondominiunsRepositoryPrisma implements CondominiunsRepository {
     if (nameExists) throw new AppException('Nome do condomínio já existe.', 400)
 
     const created = await this.prisma.condominiuns.create({
-      data: { ...data },
+      data: {
+        name: data.name,
+        document: data.document,
+        description: data.description,
+        contact: {
+          create: {
+            ...data.contact,
+          },
+        },
+      },
     })
 
     return created
@@ -144,6 +154,27 @@ export class CondominiunsRepositoryPrisma implements CondominiunsRepository {
         data: { ...data },
       })
     }
+  }
+
+  async updateContact(
+    id: string,
+    data: UpdateCondominiumContactDTO,
+  ): Promise<void> {
+    const condominium = await this.prisma.condominiuns.findUnique({
+      where: { id },
+      select: {
+        id: true,
+      },
+    })
+
+    if (!condominium) throw new AppException('Condomínio não encontrado.', 404)
+
+    await this.prisma.contacts.update({
+      where: {
+        id_condominium: id,
+      },
+      data: { ...data },
+    })
   }
 
   async delete(id: string): Promise<void> {

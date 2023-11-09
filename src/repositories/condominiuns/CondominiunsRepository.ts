@@ -3,6 +3,7 @@ import {
   CreateCondominiumDTO,
   UpdateCondominiumAddressDTO,
   UpdateCondominiumDTO,
+  UpdateCondominiumContactDTO,
 } from '@dtos/condominiuns'
 import { PaginateOptions, PaginatedResult } from '@repositories/utils/paginator'
 
@@ -19,6 +20,11 @@ export abstract class CondominiunsRepository {
   abstract updateAddress(
     id: string,
     data: UpdateCondominiumAddressDTO,
+  ): Promise<void>
+
+  abstract updateContact(
+    id: string,
+    data: UpdateCondominiumContactDTO,
   ): Promise<void>
 
   abstract delete(id: string): Promise<void>

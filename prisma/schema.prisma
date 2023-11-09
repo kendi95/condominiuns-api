@@ -40,6 +40,7 @@ model Condominiuns {
   document    String  @unique @db.Char(18)
   status      Boolean @default(true)
 
+  contact Contacts?
   address Addresses?
 
   @@map("condominiuns")
@@ -59,4 +60,16 @@ model Addresses {
   id_condominium String       @unique
 
   @@map("addresses")
+}
+
+model Contacts {
+  id         String @unique @default(uuid())
+  email      String @unique
+  phone      String @db.Char(10)
+  cell_phone String @db.Char(11)
+
+  condominium    Condominiuns @relation(fields: [id_condominium], references: [id])
+  id_condominium String       @unique
+
+  @@map("contacts")
 }
