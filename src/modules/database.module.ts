@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 
 import { PrismaService } from '@database/prisma'
 
@@ -8,12 +9,15 @@ import { RolesRepositoryPrisma } from '@repositories/roles/prisma/RolesRepositor
 import { UsersRepositoryPrisma } from '@repositories/users/prisma/UsersRepositoryPrisma'
 import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsRepository'
 import { CondominiunsRepositoryPrisma } from '@repositories/condominiuns/prisma/CondominiunsRepositoryPrisma'
+import { AuthenticationRepository } from '@repositories/auth/AuthenticationRepository'
+import { AuthenticationRepositoryPrisma } from '@repositories/auth/prisma/AuthenticationRepositoryPrisma'
 
 @Module({
   imports: [],
   controllers: [],
   providers: [
     PrismaService,
+    JwtService,
     {
       provide: RolesRepository,
       useClass: RolesRepositoryPrisma,
@@ -26,7 +30,16 @@ import { CondominiunsRepositoryPrisma } from '@repositories/condominiuns/prisma/
       provide: CondominiunsRepository,
       useClass: CondominiunsRepositoryPrisma,
     },
+    {
+      provide: AuthenticationRepository,
+      useClass: AuthenticationRepositoryPrisma,
+    },
   ],
-  exports: [RolesRepository, UsersRepository, CondominiunsRepository],
+  exports: [
+    RolesRepository,
+    UsersRepository,
+    CondominiunsRepository,
+    AuthenticationRepository,
+  ],
 })
 export class DatabaseModule {}

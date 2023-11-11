@@ -40,7 +40,7 @@ export class RolesRepositoryPrisma implements RolesRepository {
     })
   }
 
-  async get(id: string): Promise<Roles> {
+  async get(id: number): Promise<Roles> {
     const role = await this.prisma.roles.findUnique({
       where: { id },
     })
@@ -50,7 +50,7 @@ export class RolesRepositoryPrisma implements RolesRepository {
     return role
   }
 
-  async update(id: string, data: UpdateRoleDTO): Promise<void> {
+  async update(id: number, data: UpdateRoleDTO): Promise<void> {
     const role = await this.prisma.roles.findUnique({
       where: { id },
     })
@@ -78,7 +78,7 @@ export class RolesRepositoryPrisma implements RolesRepository {
     })
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     const role = await this.prisma.roles.findUnique({
       where: { id },
     })

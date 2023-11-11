@@ -11,7 +11,7 @@ export class UpdateRolesController {
 
   @Put('/:id')
   async handler(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() data: UpdateRoleDTO,
     @Res() response: Response,
   ) {

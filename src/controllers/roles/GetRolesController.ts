@@ -9,7 +9,7 @@ export class GetRolesController {
   constructor(private rolesRepository: RolesRepository) {}
 
   @Get('/:id')
-  async handler(@Param('id') id: string, @Res() response: Response) {
+  async handler(@Param('id') id: number, @Res() response: Response) {
     try {
       const role = await this.rolesRepository.get(id)
       return response.json(role)

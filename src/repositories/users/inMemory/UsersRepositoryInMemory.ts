@@ -24,12 +24,12 @@ export class UsersRepositoryInMemory implements UsersRepository {
   constructor() {
     this.roles = [
       {
-        id: uuidV4(),
+        id: 1,
         name: 'ADMINISTRATOR',
         description: '',
       },
       {
-        id: uuidV4(),
+        id: 2,
         name: 'COMMON',
         description: '',
       },

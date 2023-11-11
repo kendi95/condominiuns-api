@@ -6,7 +6,7 @@ import { RolesRepository } from '@repositories/roles/RolesRepository'
 export class DeleteRolesService {
   constructor(private rolesRepository: RolesRepository) {}
 
-  async execute(id: string): Promise<void> {
+  async execute(id: number): Promise<void> {
     await this.rolesRepository.delete(id)
   }
 }

@@ -34,7 +34,7 @@ describe('DELETE ROLE SERVICE', () => {
     })
 
     expect(async () => {
-      await deleteRoleService.execute('wrong id')
+      await deleteRoleService.execute(0)
     }).rejects.toThrow(AppError)
   })
 })

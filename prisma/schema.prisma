@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Roles {
-  id          String  @unique @default(uuid())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
 
-  users Users[]
+  users       Users[]
+  permissions RolesPermissions[]
 
   @@map("roles")
 }
@@ -27,8 +28,8 @@ model Users {
   password String
   status   Boolean @default(true)
 
-  role    Roles  @relation(fields: [id_role], references: [id])
-  id_role String
+  role    Roles @relation(fields: [id_role], references: [id])
+  id_role Int
 
   @@map("users")
 }
@@ -72,4 +73,25 @@ model Contacts {
   id_condominium String       @unique
 
   @@map("contacts")
+}
+
+model Permissions {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  roles RolesPermissions[]
+
+  @@map("permissions")
+}
+
+model RolesPermissions {
+  role Roles @relation(fields: [id_role], references: [id])
+
+  permission Permissions @relation(fields: [id_permission], references: [id])
+
+  id_role       Int
+  id_permission Int
+
+  @@id([id_role, id_permission])
+  @@map("roles_permissions")
 }

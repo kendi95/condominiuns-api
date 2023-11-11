@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from 'uuid'
-
 import { Roles } from '@domains/Roles'
 import { AppError } from '@errors/AppError'
 import { RolesRepository } from '../RolesRepository'
@@ -19,7 +17,7 @@ export class RolesRepositoryInMemory implements RolesRepository {
     if (roleExists) throw new AppError('Papel do usuário já existe.')
 
     const role = {
-      id: uuidV4(),
+      id: this.roles.length + 1,
       ...data,
     } as Roles
 
@@ -37,7 +35,7 @@ export class RolesRepositoryInMemory implements RolesRepository {
     })
   }
 
-  async get(id: string): Promise<Roles> {
+  async get(id: number): Promise<Roles> {
     const role = this.roles.find((role) => role.id === id)
 
     if (!role) throw new AppError('Papel do usuário não encontrado.')
@@ -45,7 +43,7 @@ export class RolesRepositoryInMemory implements RolesRepository {
     return role
   }
 
-  async update(id: string, data: UpdateRoleDTO): Promise<void> {
+  async update(id: number, data: UpdateRoleDTO): Promise<void> {
     const roleIndex = this.roles.findIndex((role) => role.id === id)
 
     if (roleIndex < 0) throw new AppError('Papel do usuário não encontrado.')
@@ -56,7 +54,7 @@ export class RolesRepositoryInMemory implements RolesRepository {
     }
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: number): Promise<void> {
     const roleIndex = this.roles.findIndex((role) => role.id === id)
 
     if (roleIndex < 0) throw new AppError('Papel do usuário não encontrado.')

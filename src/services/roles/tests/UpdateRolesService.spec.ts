@@ -37,7 +37,7 @@ describe('GET ROLE SERVICE', () => {
     })
 
     expect(async () => {
-      await updateRoleService.execute('wrong id', {
+      await updateRoleService.execute(0, {
         name: 'ADMINISTRATOR 2',
         description: "System's administrator",
       })

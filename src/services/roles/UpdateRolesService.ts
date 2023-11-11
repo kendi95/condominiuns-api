@@ -7,7 +7,7 @@ import { RolesRepository } from '@repositories/roles/RolesRepository'
 export class UpdateRolesService {
   constructor(private rolesRepository: RolesRepository) {}
 
-  async execute(id: string, data: UpdateRoleDTO): Promise<void> {
+  async execute(id: number, data: UpdateRoleDTO): Promise<void> {
     await this.rolesRepository.update(id, data)
   }
 }

@@ -7,7 +7,7 @@ import { RolesRepository } from '@repositories/roles/RolesRepository'
 export class GetRolesService {
   constructor(private rolesRepository: RolesRepository) {}
 
-  async execute(id: string): Promise<Roles> {
+  async execute(id: number): Promise<Roles> {
     const role = await this.rolesRepository.get(id)
     return role
   }

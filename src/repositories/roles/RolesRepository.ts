@@ -5,7 +5,7 @@ import { PaginateOptions, PaginatedResult } from '@repositories/utils/paginator'
 export abstract class RolesRepository {
   abstract create(data: CreateRoleDTO): Promise<Roles>
   abstract list(query: PaginateOptions): Promise<PaginatedResult<Roles>>
-  abstract get(id: string): Promise<Roles>
-  abstract update(id: string, data: UpdateRoleDTO): Promise<void>
-  abstract delete(id: string): Promise<void>
+  abstract get(id: number): Promise<Roles>
+  abstract update(id: number, data: UpdateRoleDTO): Promise<void>
+  abstract delete(id: number): Promise<void>
 }

@@ -5,7 +5,7 @@ export class Users {
   name: string
   email: string
   password: string
-  id_role: string
+  id_role: number
   status: boolean
 
   role?: Roles

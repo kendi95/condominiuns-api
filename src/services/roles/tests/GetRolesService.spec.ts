@@ -35,7 +35,7 @@ describe('GET ROLE SERVICE', () => {
     })
 
     expect(async () => {
-      await getRoleService.execute('wrong id')
+      await getRoleService.execute(0)
     }).rejects.toThrow(AppError)
   })
 })

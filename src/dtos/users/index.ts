@@ -2,7 +2,7 @@ export type CreateUserDTO = {
   name: string
   email: string
   password: string
-  id_role: string
+  id_role: number
 }
 
 export type UpdateUserDTO = {
@@ -17,5 +17,5 @@ export type UpdateUserPasswordDTO = {
 }
 
 export type UpdateUserRoleDTO = {
-  id_role: string
+  id_role: number
 }

@@ -9,7 +9,7 @@ export class DeleteRolesController {
   constructor(private rolesRepository: RolesRepository) {}
 
   @Delete('/:id')
-  async handler(@Param('id') id: string, @Res() response: Response) {
+  async handler(@Param('id') id: number, @Res() response: Response) {
     try {
       await this.rolesRepository.delete(id)
       return response.status(204).send()
