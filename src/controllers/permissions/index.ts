@@ -1,0 +1,5 @@
+export { CreatePermissionsController } from './CreatePermissionsController'
+export { DeletePermissionsController } from './DeletePermissionsController'
+export { GetPermissionsController } from './GetPermissionsController'
+export { ListPermissionsController } from './ListPermissionsController'
+export { UpdatePermissionsController } from './UpdatePermissionsController'

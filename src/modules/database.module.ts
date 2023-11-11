@@ -11,6 +11,8 @@ import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsR
 import { CondominiunsRepositoryPrisma } from '@repositories/condominiuns/prisma/CondominiunsRepositoryPrisma'
 import { AuthenticationRepository } from '@repositories/auth/AuthenticationRepository'
 import { AuthenticationRepositoryPrisma } from '@repositories/auth/prisma/AuthenticationRepositoryPrisma'
+import { PermissionsRepository } from '@repositories/permissions/PermissionsRepository'
+import { PermissionsRepositoryPrisma } from '@repositories/permissions/prisma/PermissionsRepositoryPrisma'
 
 @Module({
   imports: [],
@@ -21,6 +23,10 @@ import { AuthenticationRepositoryPrisma } from '@repositories/auth/prisma/Authen
     {
       provide: RolesRepository,
       useClass: RolesRepositoryPrisma,
+    },
+    {
+      provide: PermissionsRepository,
+      useClass: PermissionsRepositoryPrisma,
     },
     {
       provide: UsersRepository,
@@ -38,6 +44,7 @@ import { AuthenticationRepositoryPrisma } from '@repositories/auth/prisma/Authen
   exports: [
     RolesRepository,
     UsersRepository,
+    PermissionsRepository,
     CondominiunsRepository,
     AuthenticationRepository,
   ],

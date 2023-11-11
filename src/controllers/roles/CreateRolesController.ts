@@ -7,7 +7,7 @@ import { RolesRepository } from '@repositories/roles/RolesRepository'
 
 @Controller('/roles')
 export class CreateRolesController {
-  constructor(private rolesRepository: RolesRepository) { }
+  constructor(private rolesRepository: RolesRepository) {}
 
   @Post('')
   async handler(@Body() data: CreateRoleDTO, @Res() response: Response) {
