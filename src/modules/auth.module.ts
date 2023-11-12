@@ -3,9 +3,9 @@ import { JwtModule } from '@nestjs/jwt'
 
 import { DatabaseModule } from './database.module'
 
-import { AuthenticationService } from '@services/auth/AuthenticationService'
+import { AuthenticationService } from '@services/auth'
 
-import { AuthenticationController } from '@controllers/auth/AuthenticationController'
+import { AuthenticationController } from '@controllers/auth'
 
 @Module({
   imports: [

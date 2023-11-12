@@ -7,17 +7,22 @@ import {
 
 import { RolesValidations } from '@validations/roles'
 
-import { CreateRolesService } from '@services/roles/CreateRolesService'
-import { DeleteRolesService } from '@services/roles/DeleteRolesService'
-import { GetRolesService } from '@services/roles/GetRolesService'
-import { ListRolesService } from '@services/roles/ListRolesService'
-
 import { DatabaseModule } from './database.module'
-import { GetRolesController } from 'src/controllers/roles/GetRolesController'
-import { ListRolesController } from 'src/controllers/roles/ListRolesController'
-import { DeleteRolesController } from 'src/controllers/roles/DeleteRolesController'
-import { CreateRolesController } from 'src/controllers/roles/CreateRolesController'
-import { UpdateRolesController } from 'src/controllers/roles/UpdateRolesController'
+
+import {
+  CreateRolesController,
+  GetRolesController,
+  ListRolesController,
+  DeleteRolesController,
+  UpdateRolesController,
+} from '@controllers/roles'
+
+import {
+  CreateRolesService,
+  ListRolesService,
+  GetRolesService,
+  DeleteRolesService,
+} from '@services/roles'
 
 @Module({
   imports: [DatabaseModule],
