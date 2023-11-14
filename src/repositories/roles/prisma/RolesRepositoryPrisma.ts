@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common'
 
 import { Roles } from '@domains/Roles'
-import { CreateRoleDTO, UpdateRoleDTO } from '@dtos/roles'
+import {
+  CreateRoleDTO,
+  IncludePermissionsDTO,
+  UpdateRoleDTO,
+} from '@dtos/roles'
 import { RolesRepository } from '../RolesRepository'
 import { PrismaService } from '@database/prisma'
 import {
@@ -88,5 +92,63 @@ export class RolesRepositoryPrisma implements RolesRepository {
     await this.prisma.roles.delete({
       where: { id },
     })
+  }
+
+  async includePermissions(
+    id: number,
+    data: IncludePermissionsDTO,
+  ): Promise<Roles> {
+    const role = await this.prisma.roles.findUnique({
+      where: { id },
+      include: {
+        permissions: true,
+      },
+    })
+
+    if (!role) throw new AppException('Papel do usuário não encontrado.', 404)
+
+    if (role.permissions.length > 0) {
+      await this.prisma.rolesPermissions.deleteMany({
+        where: { id_role: id },
+      })
+    }
+
+    const datas = data.permissions.map((idPermission) => {
+      return {
+        id_permission: idPermission,
+        id_role: id,
+      }
+    })
+
+    await this.prisma.rolesPermissions.createMany({
+      data: [...datas],
+    })
+
+    const includedPermissions = await this.prisma.roles.findFirst({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        permissions: {
+          select: {
+            permission: true,
+          },
+        },
+      },
+    })
+
+    const permissions = includedPermissions.permissions.map(
+      (permission) => permission.permission,
+    )
+
+    const newRole: Roles = {
+      id: role.id,
+      name: role.name,
+      description: role.description,
+      permissions,
+    }
+
+    return newRole
   }
 }

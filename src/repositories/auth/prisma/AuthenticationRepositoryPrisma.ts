@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common'
 import { compare } from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
+import { Injectable } from '@nestjs/common'
 
 import { AuthenticateDTO, TokenDTO } from '@dtos/auth'
 import { AuthenticationRepository } from '../AuthenticationRepository'
 import { PrismaService } from '@database/prisma'
 import { AppException } from '@errors/AppException'
+
+// interface TokenDTO {
+//   token: string
+//   user: Users
+// }
 
 @Injectable()
 export class AuthenticationRepositoryPrisma
@@ -25,9 +30,14 @@ export class AuthenticationRepositoryPrisma
         name: true,
         status: true,
         password: true,
+        id_role: true,
         role: {
           include: {
-            permissions: true,
+            permissions: {
+              select: {
+                permission: true,
+              },
+            },
           },
         },
       },
@@ -57,9 +67,24 @@ export class AuthenticationRepositoryPrisma
       secret: process.env.APP_AUTH_SECRET,
     })
 
+    const permissions = user.role.permissions.map(
+      (permission) => permission.permission,
+    )
+
     return {
       token,
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        status: user.status,
+        role: {
+          id: user.role.id,
+          name: user.role.name,
+          description: user.role.description,
+          permissions,
+        },
+      },
     }
   }
 }

@@ -17,3 +17,11 @@ export const updateRoleSchema = z
       .nonempty("O campo 'descrição' não deve estar vazio."),
   })
   .required()
+
+export const includePermissionsRoleSchema = z
+  .object({
+    permissions: z
+      .array(z.number())
+      .nonempty("O campo 'permissões' não deve estar vazio"),
+  })
+  .required()

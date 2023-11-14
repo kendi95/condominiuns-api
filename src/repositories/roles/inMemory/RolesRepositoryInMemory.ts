@@ -1,7 +1,12 @@
 import { Roles } from '@domains/Roles'
+import { Permissions } from '@domains/Permissions'
 import { AppError } from '@errors/AppError'
 import { RolesRepository } from '../RolesRepository'
-import { CreateRoleDTO, UpdateRoleDTO } from '@dtos/roles'
+import {
+  CreateRoleDTO,
+  UpdateRoleDTO,
+  IncludePermissionsDTO,
+} from '@dtos/roles'
 import {
   PaginateOptions,
   PaginatedResult,
@@ -10,6 +15,24 @@ import {
 
 export class RolesRepositoryInMemory implements RolesRepository {
   roles: Roles[] = []
+  permissions: Permissions[] = []
+
+  constructor() {
+    this.permissions = [
+      {
+        id: 1,
+        name: 'ACCESS_ALL',
+      },
+      {
+        id: 2,
+        name: 'CREATE_PERMISSION',
+      },
+      {
+        id: 3,
+        name: 'DELETE_PERMISSION',
+      },
+    ]
+  }
 
   async create(data: CreateRoleDTO): Promise<Roles> {
     const roleExists = this.roles.find((role) => role.name === data.name)
@@ -60,5 +83,30 @@ export class RolesRepositoryInMemory implements RolesRepository {
     if (roleIndex < 0) throw new AppError('Papel do usuário não encontrado.')
 
     this.roles.splice(roleIndex, 1)
+  }
+
+  async includePermissions(
+    id: number,
+    data: IncludePermissionsDTO,
+  ): Promise<Roles> {
+    const roleIndex = this.roles.findIndex((role) => role.id === id)
+
+    if (roleIndex < 0) throw new AppError('Papel do usuário não encontrado.')
+
+    const idPermissions = this.roles[roleIndex].permissions.map(
+      (permission) => permission.id,
+    )
+
+    if (idPermissions.length !== data.permissions.length) {
+      this.roles[roleIndex].permissions = []
+    }
+
+    const newPermissions = this.permissions.filter(
+      (permission) => data.permissions.includes(permission.id) && permission,
+    )
+
+    this.roles[roleIndex].permissions = newPermissions
+
+    return this.roles[roleIndex]
   }
 }

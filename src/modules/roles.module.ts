@@ -15,6 +15,7 @@ import {
   ListRolesController,
   DeleteRolesController,
   UpdateRolesController,
+  IncludePermissionsRolesController,
 } from '@controllers/roles'
 
 import {
@@ -22,7 +23,9 @@ import {
   ListRolesService,
   GetRolesService,
   DeleteRolesService,
+  IncludePermissionsRolesService,
 } from '@services/roles'
+import { IncludePermissionsRolesValidations } from '@validations/roles/permissions.validation'
 
 @Module({
   imports: [DatabaseModule],
@@ -32,12 +35,14 @@ import {
     ListRolesController,
     DeleteRolesController,
     UpdateRolesController,
+    IncludePermissionsRolesController,
   ],
   providers: [
     CreateRolesService,
     ListRolesService,
     GetRolesService,
     DeleteRolesService,
+    IncludePermissionsRolesService,
   ],
 })
 export class RolesModule implements NestModule {
@@ -49,6 +54,11 @@ export class RolesModule implements NestModule {
 
     consumer.apply(RolesValidations).forRoutes({
       path: 'roles/:id',
+      method: RequestMethod.PUT,
+    })
+
+    consumer.apply(IncludePermissionsRolesValidations).forRoutes({
+      path: 'roles/:id/permissions',
       method: RequestMethod.PUT,
     })
   }

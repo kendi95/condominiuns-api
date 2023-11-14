@@ -7,3 +7,7 @@ export type UpdateRoleDTO = {
   name: string
   description: string
 }
+
+export type IncludePermissionsDTO = {
+  permissions: number[]
+}
