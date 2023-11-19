@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { Roles } from '@domains/Roles'
 import {
   CreateRoleDTO,
+  IncludePagesDTO,
   IncludePermissionsDTO,
   UpdateRoleDTO,
 } from '@dtos/roles'
@@ -147,6 +148,59 @@ export class RolesRepositoryPrisma implements RolesRepository {
       name: role.name,
       description: role.description,
       permissions,
+    }
+
+    return newRole
+  }
+
+  async includePages(id: number, data: IncludePagesDTO): Promise<Roles> {
+    const role = await this.prisma.roles.findUnique({
+      where: { id },
+      include: {
+        pages: true,
+      },
+    })
+
+    if (!role) throw new AppException('Papel do usuário não encontrado.', 404)
+
+    if (role.pages.length > 0) {
+      await this.prisma.rolesPages.deleteMany({
+        where: { id_role: id },
+      })
+    }
+
+    const datas = data.pages.map((idPage) => {
+      return {
+        id_page: idPage,
+        id_role: id,
+      }
+    })
+
+    await this.prisma.rolesPages.createMany({
+      data: [...datas],
+    })
+
+    const includedPermissions = await this.prisma.roles.findFirst({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        pages: {
+          select: {
+            page: true,
+          },
+        },
+      },
+    })
+
+    const pages = includedPermissions.pages.map((page) => page.page)
+
+    const newRole: Roles = {
+      id: role.id,
+      name: role.name,
+      description: role.description,
+      pages,
     }
 
     return newRole

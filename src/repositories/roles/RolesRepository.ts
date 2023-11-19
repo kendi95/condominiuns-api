@@ -3,6 +3,7 @@ import {
   CreateRoleDTO,
   UpdateRoleDTO,
   IncludePermissionsDTO,
+  IncludePagesDTO,
 } from '@dtos/roles'
 import { PaginateOptions, PaginatedResult } from '@repositories/utils/paginator'
 
@@ -17,4 +18,6 @@ export abstract class RolesRepository {
     id: number,
     data: IncludePermissionsDTO,
   ): Promise<Roles>
+
+  abstract includePages(id: number, data: IncludePagesDTO): Promise<Roles>
 }

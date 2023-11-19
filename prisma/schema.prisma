@@ -17,6 +17,7 @@ model Roles {
 
   users       Users[]
   permissions RolesPermissions[]
+  pages       RolesPages[]
 
   @@map("roles")
 }
@@ -94,4 +95,26 @@ model RolesPermissions {
 
   @@id([id_role, id_permission])
   @@map("roles_permissions")
+}
+
+model Pages {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  roles RolesPages[]
+
+  @@map("pages")
+}
+
+model RolesPages {
+  role Roles @relation(fields: [id_role], references: [id])
+
+  page Pages @relation(fields: [id_page], references: [id])
+
+  id_role Int
+  id_page Int
+
+  @@id([id_role, id_page])
+  @@map("roles_pages")
 }

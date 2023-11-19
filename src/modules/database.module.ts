@@ -13,6 +13,8 @@ import { AuthenticationRepository } from '@repositories/auth/AuthenticationRepos
 import { AuthenticationRepositoryPrisma } from '@repositories/auth/prisma/AuthenticationRepositoryPrisma'
 import { PermissionsRepository } from '@repositories/permissions/PermissionsRepository'
 import { PermissionsRepositoryPrisma } from '@repositories/permissions/prisma/PermissionsRepositoryPrisma'
+import { PagesRepository } from '@repositories/pages/PagesRepository'
+import { PagesRepositoryPrisma } from '@repositories/pages/prisma/PagesRepositoryPrisma'
 
 @Module({
   imports: [],
@@ -40,6 +42,10 @@ import { PermissionsRepositoryPrisma } from '@repositories/permissions/prisma/Pe
       provide: AuthenticationRepository,
       useClass: AuthenticationRepositoryPrisma,
     },
+    {
+      provide: PagesRepository,
+      useClass: PagesRepositoryPrisma,
+    },
   ],
   exports: [
     RolesRepository,
@@ -47,6 +53,7 @@ import { PermissionsRepositoryPrisma } from '@repositories/permissions/prisma/Pe
     PermissionsRepository,
     CondominiunsRepository,
     AuthenticationRepository,
+    PagesRepository,
   ],
 })
 export class DatabaseModule {}

@@ -6,16 +6,19 @@ import {
   CreateRoleDTO,
   UpdateRoleDTO,
   IncludePermissionsDTO,
+  IncludePagesDTO,
 } from '@dtos/roles'
 import {
   PaginateOptions,
   PaginatedResult,
   paginator,
 } from '@repositories/utils/paginator'
+import { Pages } from '@domains/Pages'
 
 export class RolesRepositoryInMemory implements RolesRepository {
   roles: Roles[] = []
   permissions: Permissions[] = []
+  pages: Pages[] = []
 
   constructor() {
     this.permissions = [
@@ -30,6 +33,21 @@ export class RolesRepositoryInMemory implements RolesRepository {
       {
         id: 3,
         name: 'DELETE_PERMISSION',
+      },
+    ]
+
+    this.pages = [
+      {
+        id: 1,
+        name: '/dashboard',
+      },
+      {
+        id: 2,
+        name: '/users',
+      },
+      {
+        id: 3,
+        name: '/messages',
       },
     ]
   }
@@ -106,6 +124,28 @@ export class RolesRepositoryInMemory implements RolesRepository {
     )
 
     this.roles[roleIndex].permissions = newPermissions
+
+    return this.roles[roleIndex]
+  }
+
+  async includePages(id: number, data: IncludePagesDTO): Promise<Roles> {
+    const roleIndex = this.roles.findIndex((role) => role.id === id)
+
+    if (roleIndex < 0) throw new AppError('Papel do usuário não encontrado.')
+
+    const idPages = this.roles[roleIndex].permissions.map(
+      (permission) => permission.id,
+    )
+
+    if (idPages.length !== data.pages.length) {
+      this.roles[roleIndex].pages = []
+    }
+
+    const newPages = this.pages.filter(
+      (page) => data.pages.includes(page.id) && page,
+    )
+
+    this.roles[roleIndex].pages = newPages
 
     return this.roles[roleIndex]
   }

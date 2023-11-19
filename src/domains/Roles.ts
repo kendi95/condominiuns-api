@@ -1,3 +1,4 @@
+import { Pages } from './Pages'
 import { Permissions } from './Permissions'
 
 export interface Roles {
@@ -6,4 +7,5 @@ export interface Roles {
   description: string
 
   permissions?: Permissions[]
+  pages?: Pages[]
 }

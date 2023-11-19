@@ -11,3 +11,7 @@ export type UpdateRoleDTO = {
 export type IncludePermissionsDTO = {
   permissions: number[]
 }
+
+export type IncludePagesDTO = {
+  pages: number[]
+}

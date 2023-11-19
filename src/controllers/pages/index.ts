@@ -1,0 +1,5 @@
+export { CreatePagesController } from './CreatePagesController'
+export { DeletePagesController } from './DeletePagesController'
+export { GetPagesController } from './GetPagesController'
+export { ListPagesController } from './ListPagesController'
+export { UpdatePagesController } from './UpdatePagesController'

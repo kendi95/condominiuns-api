@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const createRoleSchema = z
+export const createPageSchema = z
   .object({
     name: z.string().nonempty("O campo 'nome' não deve estar vazio."),
     description: z
@@ -9,27 +9,11 @@ export const createRoleSchema = z
   })
   .required()
 
-export const updateRoleSchema = z
+export const updatePageSchema = z
   .object({
     name: z.string().nonempty("O campo 'nome' não deve estar vazio."),
     description: z
       .string()
       .nonempty("O campo 'descrição' não deve estar vazio."),
-  })
-  .required()
-
-export const includePermissionsRoleSchema = z
-  .object({
-    permissions: z
-      .array(z.number())
-      .nonempty("O campo 'permissões' não deve estar vazio"),
-  })
-  .required()
-
-export const includePagesRoleSchema = z
-  .object({
-    pages: z
-      .array(z.number())
-      .nonempty("O campo 'paginas' não deve estar vazio"),
   })
   .required()

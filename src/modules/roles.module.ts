@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common'
 
 import { RolesValidations } from '@validations/roles'
+import { IncludePermissionsRolesValidations } from '@validations/roles/permissions.validation'
+import { IncludePagesRolesValidations } from '@validations/roles/pages.validation'
 
 import { DatabaseModule } from './database.module'
 
@@ -16,6 +18,7 @@ import {
   DeleteRolesController,
   UpdateRolesController,
   IncludePermissionsRolesController,
+  IncludePagesRolesController,
 } from '@controllers/roles'
 
 import {
@@ -24,8 +27,8 @@ import {
   GetRolesService,
   DeleteRolesService,
   IncludePermissionsRolesService,
+  IncludePagesRolesService,
 } from '@services/roles'
-import { IncludePermissionsRolesValidations } from '@validations/roles/permissions.validation'
 
 @Module({
   imports: [DatabaseModule],
@@ -36,6 +39,7 @@ import { IncludePermissionsRolesValidations } from '@validations/roles/permissio
     DeleteRolesController,
     UpdateRolesController,
     IncludePermissionsRolesController,
+    IncludePagesRolesController,
   ],
   providers: [
     CreateRolesService,
@@ -43,6 +47,7 @@ import { IncludePermissionsRolesValidations } from '@validations/roles/permissio
     GetRolesService,
     DeleteRolesService,
     IncludePermissionsRolesService,
+    IncludePagesRolesService,
   ],
 })
 export class RolesModule implements NestModule {
@@ -59,6 +64,11 @@ export class RolesModule implements NestModule {
 
     consumer.apply(IncludePermissionsRolesValidations).forRoutes({
       path: 'roles/:id/permissions',
+      method: RequestMethod.PUT,
+    })
+
+    consumer.apply(IncludePagesRolesValidations).forRoutes({
+      path: 'roles/:id/pages',
       method: RequestMethod.PUT,
     })
   }
