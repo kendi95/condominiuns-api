@@ -1,15 +1,15 @@
 import { Paginate, PaginateQuery } from 'nestjs-paginate'
 import { Controller, Get } from '@nestjs/common'
 
-import { RolesRepository } from '@repositories/roles/RolesRepository'
+import { ListRolesService } from '@services/roles'
 
 @Controller('/roles')
 export class ListRolesController {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private service: ListRolesService) {}
 
   @Get('')
   async handler(@Paginate() query: PaginateQuery) {
-    const roles = await this.rolesRepository.list({
+    const roles = await this.service.execute({
       page: query.page,
       perPage: query.limit,
     })

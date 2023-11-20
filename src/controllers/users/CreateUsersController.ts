@@ -3,16 +3,16 @@ import { Body, Controller, Post, Res } from '@nestjs/common'
 
 import { CreateUserDTO } from '@dtos/users'
 import { AppException } from '@errors/AppException'
-import { UsersRepository } from '@repositories/users/UsersRepository'
+import { CreateUsersService } from '@services/users'
 
 @Controller('/users')
 export class CreateUsersController {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private service: CreateUsersService) {}
 
   @Post('')
   async handler(@Body() data: CreateUserDTO, @Res() response: Response) {
     try {
-      const createdUser = await this.usersRepository.create(data)
+      const createdUser = await this.service.execute(data)
       return response.json(createdUser)
     } catch (error) {
       if (error instanceof AppException) {

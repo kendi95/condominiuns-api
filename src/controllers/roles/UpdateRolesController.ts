@@ -3,11 +3,11 @@ import { Body, Controller, Param, Put, Res } from '@nestjs/common'
 
 import { UpdateRoleDTO } from '@dtos/roles'
 import { AppException } from '@errors/AppException'
-import { RolesRepository } from '@repositories/roles/RolesRepository'
+import { UpdateRolesService } from '@services/roles'
 
 @Controller('/roles')
 export class UpdateRolesController {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private service: UpdateRolesService) {}
 
   @Put('/:id')
   async handler(
@@ -16,7 +16,7 @@ export class UpdateRolesController {
     @Res() response: Response,
   ) {
     try {
-      await this.rolesRepository.update(id, data)
+      await this.service.execute(id, data)
       return response.status(204).send()
     } catch (error) {
       if (error instanceof AppException) {

@@ -1,17 +1,17 @@
 import { Response } from 'express'
 import { Controller, Get, Param, Res } from '@nestjs/common'
 
+import { GetRolesService } from '@services/roles'
 import { AppException } from '@errors/AppException'
-import { RolesRepository } from '@repositories/roles/RolesRepository'
 
 @Controller('/roles')
 export class GetRolesController {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private service: GetRolesService) {}
 
   @Get('/:id')
   async handler(@Param('id') id: number, @Res() response: Response) {
     try {
-      const role = await this.rolesRepository.get(id)
+      const role = await this.service.execute(id)
       return response.json(role)
     } catch (error) {
       if (error instanceof AppException) {

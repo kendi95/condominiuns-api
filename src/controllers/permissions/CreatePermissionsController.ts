@@ -1,18 +1,18 @@
 import { Response } from 'express'
 import { Body, Controller, Post, Res } from '@nestjs/common'
 
-import { CreatePermissionDTO } from '@dtos/permissions'
 import { AppException } from '@errors/AppException'
-import { PermissionsRepository } from '@repositories/permissions/PermissionsRepository'
+import { CreatePermissionDTO } from '@dtos/permissions'
+import { CreatePermissionsService } from '@services/permissions'
 
 @Controller('/permissions')
 export class CreatePermissionsController {
-  constructor(private permissionsRepository: PermissionsRepository) {}
+  constructor(private service: CreatePermissionsService) {}
 
   @Post('')
   async handler(@Body() data: CreatePermissionDTO, @Res() response: Response) {
     try {
-      const createdPermission = await this.permissionsRepository.create(data)
+      const createdPermission = await this.service.execute(data)
       return response.json(createdPermission)
     } catch (error) {
       if (error instanceof AppException) {

@@ -2,16 +2,16 @@ import { Response } from 'express'
 import { Controller, Param, Patch, Res } from '@nestjs/common'
 
 import { AppException } from '@errors/AppException'
-import { UsersRepository } from '@repositories/users/UsersRepository'
+import { UpdateUsersStatusService } from '@services/users'
 
 @Controller('/users')
 export class UpdateUsersStatusController {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private service: UpdateUsersStatusService) {}
 
   @Patch('/:id/status')
   async handler(@Param('id') id: string, @Res() response: Response) {
     try {
-      await this.usersRepository.updateStatus(id)
+      await this.service.execute(id)
       return response.status(204).send()
     } catch (error) {
       if (error instanceof AppException) {

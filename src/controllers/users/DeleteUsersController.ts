@@ -2,16 +2,16 @@ import { Response } from 'express'
 import { Controller, Delete, Param, Res } from '@nestjs/common'
 
 import { AppException } from '@errors/AppException'
-import { UsersRepository } from '@repositories/users/UsersRepository'
+import { DeleteUsersService } from '@services/users'
 
 @Controller('/users')
 export class DeleteUsersController {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private service: DeleteUsersService) {}
 
   @Delete('/:id')
   async handler(@Param('id') id: string, @Res() response: Response) {
     try {
-      await this.usersRepository.delete(id)
+      await this.service.execute(id)
       return response.status(204).send()
     } catch (error) {
       if (error instanceof AppException) {

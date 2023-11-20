@@ -3,16 +3,16 @@ import { Body, Controller, Post, Res } from '@nestjs/common'
 
 import { CreateRoleDTO } from '@dtos/roles'
 import { AppException } from '@errors/AppException'
-import { RolesRepository } from '@repositories/roles/RolesRepository'
+import { CreateRolesService } from '@services/roles'
 
 @Controller('/roles')
 export class CreateRolesController {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private service: CreateRolesService) {}
 
   @Post('')
   async handler(@Body() data: CreateRoleDTO, @Res() response: Response) {
     try {
-      const createdRole = await this.rolesRepository.create(data)
+      const createdRole = await this.service.execute(data)
       return response.json(createdRole)
     } catch (error) {
       if (error instanceof AppException) {

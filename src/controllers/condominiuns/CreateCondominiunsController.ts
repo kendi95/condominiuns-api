@@ -3,16 +3,16 @@ import { Body, Controller, Post, Res } from '@nestjs/common'
 
 import { CreateCondominiumDTO } from '@dtos/condominiuns'
 import { AppException } from '@errors/AppException'
-import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsRepository'
+import { CreateCondominiunsService } from '@services/condominiuns'
 
 @Controller('/condominiuns')
 export class CreateCondominiunsController {
-  constructor(private condominiunsRepository: CondominiunsRepository) {}
+  constructor(private service: CreateCondominiunsService) {}
 
   @Post('')
   async handler(@Body() data: CreateCondominiumDTO, @Res() response: Response) {
     try {
-      const createdCondominium = await this.condominiunsRepository.create(data)
+      const createdCondominium = await this.service.execute(data)
       return response.json(createdCondominium)
     } catch (error) {
       if (error instanceof AppException) {

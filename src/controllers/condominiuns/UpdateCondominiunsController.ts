@@ -3,11 +3,11 @@ import { Body, Controller, Param, Put, Res } from '@nestjs/common'
 
 import { UpdateCondominiumDTO } from '@dtos/condominiuns'
 import { AppException } from '@errors/AppException'
-import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsRepository'
+import { UpdateCondominiunsService } from '@services/condominiuns'
 
 @Controller('/condominiuns')
 export class UpdateCondominiunsController {
-  constructor(private condominiumRepository: CondominiunsRepository) {}
+  constructor(private service: UpdateCondominiunsService) {}
 
   @Put('/:id')
   async handler(
@@ -16,7 +16,7 @@ export class UpdateCondominiunsController {
     @Res() response: Response,
   ) {
     try {
-      await this.condominiumRepository.update(id, data)
+      await this.service.execute(id, data)
       return response.status(204).send()
     } catch (error) {
       if (error instanceof AppException) {

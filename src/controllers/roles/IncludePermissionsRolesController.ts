@@ -3,7 +3,7 @@ import { Body, Controller, Param, Put, Res } from '@nestjs/common'
 
 import { IncludePermissionsDTO } from '@dtos/roles'
 import { AppException } from '@errors/AppException'
-import { IncludePermissionsRolesService } from '@services/roles/IncludePermissionsRolesService'
+import { IncludePermissionsRolesService } from '@services/roles'
 
 @Controller('/roles')
 export class IncludePermissionsRolesController {

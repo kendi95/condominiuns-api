@@ -2,16 +2,16 @@ import { Response } from 'express'
 import { Controller, Get, Param, Res } from '@nestjs/common'
 
 import { AppException } from '@errors/AppException'
-import { CondominiunsRepository } from '@repositories/condominiuns/CondominiunsRepository'
+import { GetCondominiunsService } from '@services/condominiuns'
 
 @Controller('/condominiuns')
 export class GetCondominiunsController {
-  constructor(private condominiumRepository: CondominiunsRepository) {}
+  constructor(private service: GetCondominiunsService) {}
 
   @Get('/:id')
   async handler(@Param('id') id: string, @Res() response: Response) {
     try {
-      const condominium = await this.condominiumRepository.get(id)
+      const condominium = await this.service.execute(id)
       return response.json(condominium)
     } catch (error) {
       if (error instanceof AppException) {

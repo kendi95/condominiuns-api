@@ -3,7 +3,7 @@ import { Body, Controller, Param, Put, Res } from '@nestjs/common'
 
 import { IncludePagesDTO } from '@dtos/roles'
 import { AppException } from '@errors/AppException'
-import { IncludePagesRolesService } from '@services/roles/IncludePagesRolesService'
+import { IncludePagesRolesService } from '@services/roles'
 
 @Controller('/roles')
 export class IncludePagesRolesController {

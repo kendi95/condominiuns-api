@@ -26,6 +26,7 @@ import {
   ListRolesService,
   GetRolesService,
   DeleteRolesService,
+  UpdateRolesService,
   IncludePermissionsRolesService,
   IncludePagesRolesService,
 } from '@services/roles'
@@ -46,6 +47,7 @@ import {
     ListRolesService,
     GetRolesService,
     DeleteRolesService,
+    UpdateRolesService,
     IncludePermissionsRolesService,
     IncludePagesRolesService,
   ],
